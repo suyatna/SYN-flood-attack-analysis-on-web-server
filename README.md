@@ -29,7 +29,7 @@ Saya meninjau lalu lintas jaringan yang masuk dan keluar dari server web untuk m
 
 Langkah awal yang diambil adalah mematikan server web sementara agar sistem kembali stabil. Firewall kemudian disesuaikan untuk memblokir alamat IP yang mengirimkan permintaan SYN secara berlebihan. Pendekatan ini disadari bersifat sementara karena penyerang dapat mengganti atau memalsukan alamat IP. Temuan ini segera disampaikan kepada manajer untuk menentukan langkah lanjutan dalam menghentikan serangan dan mencegah kejadian serupa di masa mendatang.
 
-Berikut adalah log TCP dan HTTP yang direkam menggunakan Wireshark digunakan sebagai dasar analisis untuk mengenali pola serangan serta memahami dampaknya terhadap kinerja server web.
+Berikut adalah log TCP dan HTTP yang direkam menggunakan Wireshark:
 
 |No.|Time|Source|Destination|Protocol|Info|
 |---|---|---|---|---|---|
