@@ -60,9 +60,7 @@ Tujuan analisis meliputi:
 
 ## 📋 Analyze network attack <a name="report">
 
-### Section 1: Identify the type of attack
-
-|Hasil analisis lalu lintas jaringan dari log Wireshark menunjukkan bahwa gangguan akses website yang ditandai dengan pesan connection timeout mengarah pada serangan Denial of Service (DoS). Pola trafik memperlihatkan server web menerima lonjakan permintaan TCP SYN dalam jumlah tidak normal dari alamat IP yang tidak dikenal. Permintaan SYN tersebut dikirim secara terus-menerus dalam waktu singkat hingga server tidak lagi mampu menangani koneksi baru. Pola ini sesuai dengan karakteristik serangan SYN Flood, salah satu jenis DoS attack yang menargetkan proses awal pembentukan koneksi TCP pada server.|
+|Section 1: Identify the type of attack| Hasil analisis lalu lintas jaringan dari log Wireshark menunjukkan bahwa gangguan akses website yang ditandai dengan pesan connection timeout mengarah pada serangan Denial of Service (DoS). Pola trafik memperlihatkan server web menerima lonjakan permintaan TCP SYN dalam jumlah tidak normal dari alamat IP yang tidak dikenal. Permintaan SYN tersebut dikirim secara terus-menerus dalam waktu singkat hingga server tidak lagi mampu menangani koneksi baru. Pola ini sesuai dengan karakteristik serangan SYN Flood, salah satu jenis DoS attack yang menargetkan proses awal pembentukan koneksi TCP pada server.|
 
 ### Section 2: Explain how the attack causes the website malfunction
 
