@@ -20,11 +20,9 @@ Latihan ini disusun berdasarkan pembelajaran dalam program Google Cybersecurity 
 
 ## 💭 Incident scenario <a name="scenario">
 
-Pada suatu sore, sistem pemantauan mendeteksi gangguan pada server web yang digunakan untuk menampilkan informasi penjualan dan promosi perjalanan. Beberapa karyawan melaporkan website tidak bisa dibuka dan browser menampilkan pesan connection timeout saat halaman diakses.
+Saya bekerja sebagai analis keamanan siber di sebuah agen perjalanan yang mengandalkan website perusahaan untuk menampilkan promosi dan paket liburan. Website ini digunakan setiap hari oleh karyawan untuk membantu pelanggan memilih layanan. Suatu sore, sistem monitoring mendeteksi gangguan pada server web. Website tidak dapat diakses dan browser menampilkan pesan connection timeout. Kondisi ini mulai menghambat aktivitas operasional.
 
-Sebagai analis keamanan, saya mencoba mengakses website untuk memastikan laporan tersebut dan menemukan kendala yang sama. Pemantauan jaringan menunjukkan lonjakan trafik menuju server web dalam waktu singkat. Pola ini tidak wajar dan berasal dari alamat IP yang tidak dikenal, membuat server kewalahan dan gagal merespons permintaan dari pengguna yang sah.
-
-Kondisi ini langsung menghambat aktivitas karyawan yang mengandalkan website untuk melayani pelanggan. Temuan awal mengarah pada dugaan serangan jaringan yang menargetkan ketersediaan layanan web, sehingga diperlukan analisis lanjutan untuk memastikan jenis serangan dan dampaknya terhadap sistem.
+Peninjauan lalu lintas jaringan menunjukkan lonjakan permintaan TCP SYN dalam jumlah tidak wajar dari alamat IP eksternal yang tidak dikenal. Server web kewalahan memproses permintaan tersebut hingga gagal merespons koneksi normal. Server web dimatikan sementara untuk menstabilkan sistem, lalu firewall dikonfigurasi untuk memblokir sumber permintaan berlebih. Langkah ini bersifat sementara dan segera dilaporkan kepada manajer untuk menentukan penanganan lanjutan.
 
 Berikut adalah log TCP dan HTTP yang direkam menggunakan Wireshark:
 
