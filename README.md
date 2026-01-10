@@ -20,13 +20,11 @@ Latihan ini disusun berdasarkan pembelajaran dalam program Google Cybersecurity 
 
 ## 💭 Incident scenario <a name="scenario">
 
-Saya bekerja sebagai analis keamanan siber di sebuah agen perjalanan yang mengandalkan website perusahaan untuk menampilkan promosi dan paket liburan. Website ini digunakan setiap hari oleh tim internal untuk membantu pelanggan memilih layanan yang sesuai dengan kebutuhan mereka.
+Pada suatu sore, sistem pemantauan mendeteksi gangguan pada server web yang digunakan untuk menampilkan informasi penjualan dan promosi perjalanan. Beberapa karyawan melaporkan website tidak bisa dibuka dan browser menampilkan pesan connection timeout saat halaman diakses.
 
-Suatu sore, sistem monitoring mengirimkan peringatan adanya gangguan pada server web. Saat saya mencoba mengakses website secara langsung, halaman tidak berhasil terbuka dan browser menampilkan pesan connection timeout. Situasi ini mulai menghambat aktivitas karyawan yang sangat bergantung pada website tersebut.
+Sebagai analis keamanan, saya mencoba mengakses website untuk memastikan laporan tersebut dan menemukan kendala yang sama. Pemantauan jaringan menunjukkan lonjakan trafik menuju server web dalam waktu singkat. Pola ini tidak wajar dan berasal dari alamat IP yang tidak dikenal, membuat server kewalahan dan gagal merespons permintaan dari pengguna yang sah.
 
-Saya meninjau lalu lintas jaringan yang masuk dan keluar dari server web untuk mencari sumber masalah. Hasil pengamatan menunjukkan lonjakan permintaan TCP SYN dalam jumlah tidak wajar yang berasal dari alamat IP eksternal yang tidak dikenal. Server web terlihat kewalahan memproses permintaan tersebut hingga tidak mampu merespons koneksi secara normal.
-
-Langkah awal yang diambil adalah mematikan server web sementara agar sistem kembali stabil. Firewall kemudian disesuaikan untuk memblokir alamat IP yang mengirimkan permintaan SYN secara berlebihan. Pendekatan ini disadari bersifat sementara karena penyerang dapat mengganti atau memalsukan alamat IP. Temuan ini segera disampaikan kepada manajer untuk menentukan langkah lanjutan dalam menghentikan serangan dan mencegah kejadian serupa di masa mendatang.
+Kondisi ini langsung menghambat aktivitas karyawan yang mengandalkan website untuk melayani pelanggan. Temuan awal mengarah pada dugaan serangan jaringan yang menargetkan ketersediaan layanan web, sehingga diperlukan analisis lanjutan untuk memastikan jenis serangan dan dampaknya terhadap sistem.
 
 Berikut adalah log TCP dan HTTP yang direkam menggunakan Wireshark:
 
@@ -68,9 +66,6 @@ Log jaringan menunjukkan server web akhirnya gagal merespons permintaan dari pen
 
 ## 🏁 Conclusion <a name="conclusion">
 
-Hasil analisis lalu lintas jaringan menunjukkan bahwa gangguan akses website dipicu oleh serangan SYN Flood yang termasuk dalam kategori Denial of Service (DoS). Serangan ini terlihat dari lonjakan permintaan TCP SYN dalam jumlah tidak wajar yang datang dari alamat IP tidak dikenal, hingga server web kewalahan dan tidak mampu membangun koneksi dengan pengguna yang sah.
+Hasil analisis lalu lintas jaringan menunjukkan bahwa gangguan akses website dipicu oleh serangan Denial of Service dengan metode SYN Flood. Server web dibanjiri permintaan SYN dalam jumlah besar hingga proses pembentukan koneksi TCP terganggu. Kondisi ini membuat resource server cepat habis dan tidak mampu melayani koneksi dari pengguna yang sah.
 
-Dampaknya terasa langsung pada ketersediaan layanan website. Resource server terkuras untuk menangani permintaan koneksi palsu, sehingga koneksi yang sah tidak pernah terbentuk dan berakhir dengan pesan connection timeout. Kondisi ini menghambat aktivitas karyawan dan pelanggan yang bergantung pada website, sekaligus menurunkan keandalan layanan perusahaan.
-
-Studi kasus ini menegaskan pentingnya pemantauan lalu lintas jaringan dan kemampuan mengenali pola serangan sejak awal. Pemahaman terhadap karakteristik serangan SYN Flood membantu organisasi menyiapkan langkah pencegahan yang lebih tepat, seperti mitigasi serangan dan penguatan kontrol keamanan jaringan, agar risiko gangguan serupa dapat ditekan di masa mendatang.
-
+Insiden ini memperlihatkan bahwa lonjakan trafik yang tidak wajar dapat langsung memengaruhi ketersediaan layanan web dan aktivitas kerja karyawan. Pemahaman terhadap pola serangan melalui analisis trafik jaringan membantu mengidentifikasi jenis serangan beserta dampaknya. Temuan ini menjadi dasar bagi organisasi untuk memperkuat keamanan jaringan dan mencegah kejadian serupa di kemudian hari.
