@@ -1,4 +1,4 @@
-# SYN Flood network attack analysis
+# SYN flood network attack analysis
 
 ## 📑 Table of contents
 
@@ -54,7 +54,7 @@ Permintaan koneksi tersebut tidak pernah diselesaikan melalui proses TCP secara 
 ### Bagian 2: Cara serangan menyebabkan gangguan website
 
 Akses ke server web pada kondisi normal selalu diawali dengan proses TCP three-way handshake. Client mengirim paket SYN sebagai permintaan koneksi. Server membalas dengan SYN-ACK sebagai tanda persetujuan dan menyiapkan resource. Client kemudian mengirim ACK untuk menyelesaikan koneksi.
-- Serangan SYN Flood terjadi saat penyerang mengirim paket SYN dalam jumlah besar tanpa melanjutkan proses handshake hingga selesai.
+- Serangan SYN flood terjadi saat penyerang mengirim paket SYN dalam jumlah besar tanpa melanjutkan proses handshake hingga selesai.
 - Server tetap merespons setiap permintaan tersebut dengan menyediakan resource, meskipun koneksi tidak pernah terbentuk sepenuhnya.
 - Kapasitas server pun cepat habis dan tidak mampu melayani koneksi baru.
 
@@ -64,6 +64,6 @@ Log jaringan menunjukkan server web akhirnya gagal merespons permintaan dari pen
 
 ## 🏁 Conclusion <a name="conclusion">
 
-Hasil analisis lalu lintas jaringan menunjukkan bahwa gangguan akses website dipicu oleh serangan Denial of Service dengan metode SYN Flood. Server web dibanjiri permintaan SYN dalam jumlah besar hingga proses pembentukan koneksi TCP terganggu. Kondisi ini membuat resource server cepat habis dan tidak mampu melayani koneksi dari pengguna yang sah.
+Hasil analisis lalu lintas jaringan menunjukkan bahwa gangguan akses website dipicu oleh serangan Denial of Service dengan metode SYN flood. Server web dibanjiri permintaan SYN dalam jumlah besar hingga proses pembentukan koneksi TCP terganggu. Kondisi ini membuat resource server cepat habis dan tidak mampu melayani koneksi dari pengguna yang sah.
 
 Insiden ini memperlihatkan bahwa lonjakan trafik yang tidak wajar dapat langsung memengaruhi ketersediaan layanan web dan aktivitas kerja karyawan. Pemahaman terhadap pola serangan melalui analisis trafik jaringan membantu mengidentifikasi jenis serangan beserta dampaknya. Temuan ini menjadi dasar bagi organisasi untuk memperkuat keamanan jaringan dan mencegah kejadian serupa di kemudian hari.
