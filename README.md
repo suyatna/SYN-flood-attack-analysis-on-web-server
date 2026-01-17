@@ -1,16 +1,16 @@
 # SYN flood attack analysis on web server
 
-## 📑 Table of contents
+## 📌 Table of contents
 
-1. [Introduction](#introduction)
-2. [Incident scenario](#scenario)
-3. [Objective](#objective)
-4. [Analyze network attack](#report)
-5. [Conclusion](#conclusion)
+1. [Background](#background)
+2. [Incident overview](#scenario)
+3. [Objective of analysis](#objective)
+4. [Detailed attack analysis](#analysis)
+5. [Insights and lessons learned](#insight)
 
 ---
 
-## 👋 Introduction <a name="introduction">
+## 🧠 Background <a name="background">
 
 Studi kasus ini dibuat sebagai bagian dari latihan cybersecurity yang berfokus pada pemahaman gangguan keamanan jaringan pada layanan website. Skenario yang digunakan menggambarkan situasi ketika pelanggan dan karyawan mengalami kesulitan mengakses website akibat aktivitas jaringan yang tidak berjalan normal.
 
@@ -18,7 +18,7 @@ Latihan ini disusun berdasarkan pembelajaran dalam program Google Cybersecurity 
 
 ---
 
-## 💭 Incident scenario <a name="scenario">
+## 🚨 Incident overview <a name="scenario">
 
 Saya bekerja sebagai analis keamanan siber di sebuah agen perjalanan yang mengandalkan website perusahaan untuk menampilkan promosi dan paket liburan. Website ini digunakan setiap hari oleh karyawan untuk membantu pelanggan memilih layanan. Suatu sore, sistem monitoring mendeteksi gangguan pada server web. Website tidak dapat diakses dan browser menampilkan pesan connection timeout. Kondisi ini mulai menghambat aktivitas operasional.
 
@@ -26,11 +26,11 @@ Peninjauan lalu lintas jaringan menunjukkan lonjakan permintaan TCP SYN dalam ju
 
 Berikut adalah log TCP dan HTTP yang direkam menggunakan Wireshark:
 
-<img width="824" height="1890" alt="image" src="https://github.com/user-attachments/assets/65f6341f-486d-41c5-ab11-8640dd2aac93" />
+<img width="824" height="1400" alt="image" src="https://github.com/user-attachments/assets/65f6341f-486d-41c5-ab11-8640dd2aac93" />
 
 ---
 
-## 🎯 Objective <a name="objective">
+## 🎯 Objective of analysis <a name="objective">
 
 Studi kasus ini disusun untuk memahami dan menganalisis gangguan jaringan yang berdampak langsung pada akses website. Fokus utama berada pada upaya menelusuri sumber masalah melalui pengamatan pola lalu lintas jaringan selama insiden berlangsung.
 
@@ -43,15 +43,15 @@ Tujuan analisis meliputi:
 
 ---
 
-## 📋 Analyze network attack <a name="report">
+## 🔍 Detailed attack analysis <a name="analysis">
 
-### Bagian 1: Identifikasi jenis serangan
+### a. Attack identification
 
 Hasil pengamatan lalu lintas jaringan menunjukkan bahwa gangguan akses website yang ditandai dengan pesan connection timeout mengarah pada serangan Denial of Service (DoS). Trafik memperlihatkan lonjakan permintaan TCP SYN dalam jumlah besar yang datang dari alamat IP tidak dikenal dalam waktu singkat.
 
 Permintaan koneksi tersebut tidak pernah diselesaikan melalui proses TCP secara normal. Server web terus menerima paket SYN tanpa adanya penyelesaian koneksi hingga tahap akhir, sehingga resource server terkuras. Pola ini sesuai dengan karakteristik serangan SYN Flood, di mana server dibanjiri permintaan koneksi palsu untuk mengganggu ketersediaan layanan.
 
-### Bagian 2: Cara serangan menyebabkan gangguan website
+### b. Impact on server
 
 Akses ke server web pada kondisi normal selalu diawali dengan proses TCP three-way handshake. Client mengirim paket SYN sebagai permintaan koneksi. Server membalas dengan SYN-ACK sebagai tanda persetujuan dan menyiapkan resource. Client kemudian mengirim ACK untuk menyelesaikan koneksi.
 - Serangan SYN flood terjadi saat penyerang mengirim paket SYN dalam jumlah besar tanpa melanjutkan proses handshake hingga selesai.
@@ -62,7 +62,7 @@ Log jaringan menunjukkan server web akhirnya gagal merespons permintaan dari pen
 
 ---
 
-## 🏁 Conclusion <a name="conclusion">
+## 💡 Insights and lessons learned <a name="insight">
 
 Hasil analisis lalu lintas jaringan menunjukkan bahwa gangguan akses website disebabkan oleh serangan TCP SYN flood yang termasuk dalam kategori Denial of Service (DoS). Serangan ini terlihat dari lonjakan permintaan TCP SYN dalam jumlah tidak wajar yang datang dari alamat IP tidak dikenal, sehingga server web kewalahan dan gagal menyelesaikan proses koneksi dengan pengguna yang sah.
 
