@@ -24,7 +24,7 @@ Saya bekerja sebagai analis keamanan siber di sebuah agen perjalanan yang mengan
 
 Peninjauan lalu lintas jaringan menunjukkan lonjakan permintaan TCP SYN dalam jumlah tidak wajar dari alamat IP eksternal yang tidak dikenal. Server web kewalahan memproses permintaan tersebut hingga gagal merespons koneksi normal. Server web dimatikan sementara untuk menstabilkan sistem, lalu firewall dikonfigurasi untuk memblokir sumber permintaan berlebih. Langkah ini bersifat sementara dan segera dilaporkan kepada manajer untuk menentukan penanganan lanjutan.
 
-Berikut adalah log TCP dan HTTP yang direkam menggunakan Wireshark:
+Berikut ringkasan log TCP dan HTTP selama insiden:
 
 <img width="824" height="1700" alt="image" src="https://github.com/user-attachments/assets/65f6341f-486d-41c5-ab11-8640dd2aac93" />
 
