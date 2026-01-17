@@ -26,7 +26,7 @@ Peninjauan lalu lintas jaringan menunjukkan lonjakan permintaan TCP SYN dalam ju
 
 Berikut adalah log TCP dan HTTP yang direkam menggunakan Wireshark:
 
-<img width="824" height="1000" alt="image" src="https://github.com/user-attachments/assets/65f6341f-486d-41c5-ab11-8640dd2aac93" />
+<img width="824" height="1700" alt="image" src="https://github.com/user-attachments/assets/65f6341f-486d-41c5-ab11-8640dd2aac93" />
 
 ---
 
