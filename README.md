@@ -12,17 +12,17 @@
 
 ## 🧠 Background <a name="background">
 
-Studi kasus ini dibuat sebagai bagian dari latihan cybersecurity yang berfokus pada pemahaman gangguan keamanan jaringan pada layanan website. Skenario yang digunakan menggambarkan situasi ketika pelanggan dan karyawan mengalami kesulitan mengakses website akibat aktivitas jaringan yang tidak berjalan normal.
+Studi kasus ini saya buat sebagai latihan cybersecurity dengan fokus memahami gangguan keamanan jaringan pada layanan website. Skenario yang digunakan menggambarkan kondisi saat pelanggan dan karyawan kesulitan mengakses website karena aktivitas jaringan tidak berjalan normal.
 
-Latihan ini disusun berdasarkan pembelajaran dalam program Google Cybersecurity Professional Certificate, khususnya pada course Connect and Protect: Networks and Network Security. Pembahasan difokuskan pada upaya mengenali jenis serangan jaringan yang mungkin terjadi, memahami dampaknya terhadap kinerja website, serta melihat pengaruhnya terhadap operasional organisasi secara keseluruhan.
+Latihan ini disusun berdasarkan materi di program Google Cybersecurity Professional Certificate, khususnya pada course Connect and Protect: Networks and Network Security. Pembahasan dimulai dengan mengenali jenis serangan jaringan yang mungkin terjadi, memahami dampaknya ke performa website, dan melihat pengaruhnya ke operasional organisasi secara keseluruhan.
 
 ---
 
 ## 🚨 Incident overview <a name="scenario">
 
-Saya bekerja sebagai analis keamanan siber di sebuah agen perjalanan yang mengandalkan website perusahaan untuk menampilkan promosi dan paket liburan. Website ini digunakan setiap hari oleh karyawan untuk membantu pelanggan memilih layanan. Suatu sore, sistem monitoring mendeteksi gangguan pada server web. Website tidak dapat diakses dan browser menampilkan pesan connection timeout. Kondisi ini mulai menghambat aktivitas operasional.
+Saya bertugas sebagai analis keamanan siber di sebuah agen perjalanan yang mengandalkan website perusahaan untuk promosi dan paket liburan. Website ini dipakai setiap hari oleh karyawan untuk membantu pelanggan memilih layanan. Suatu sore, sistem monitoring mendeteksi gangguan di server web. Website tidak bisa diakses dan browser menampilkan pesan connection timeout. Kondisi ini mulai menghambat aktivitas operasional.
 
-Peninjauan lalu lintas jaringan menunjukkan lonjakan permintaan TCP SYN dalam jumlah tidak wajar dari alamat IP eksternal yang tidak dikenal. Server web kewalahan memproses permintaan tersebut hingga gagal merespons koneksi normal. Server web dimatikan sementara untuk menstabilkan sistem, lalu firewall dikonfigurasi untuk memblokir sumber permintaan berlebih. Langkah ini bersifat sementara dan segera dilaporkan kepada manajer untuk menentukan penanganan lanjutan.
+Peninjauan trafik jaringan menunjukkan lonjakan permintaan TCP SYN dalam jumlah tidak wajar yang berasal dari alamat IP eksternal tidak dikenal. Server web kewalahan menangani permintaan tersebut hingga gagal merespons koneksi normal. Server web dimatikan sementara untuk menstabilkan sistem. Firewall lalu dikonfigurasi untuk memblokir sumber permintaan berlebih. Langkah ini bersifat sementara dan langsung dilaporkan ke manajer untuk menentukan penanganan lanjutan.
 
 Berikut ringkasan log TCP dan HTTP selama insiden:
 
@@ -32,14 +32,14 @@ Berikut ringkasan log TCP dan HTTP selama insiden:
 
 ## 🎯 Objective of analysis <a name="objective">
 
-Studi kasus ini disusun untuk memahami dan menganalisis gangguan jaringan yang berdampak langsung pada akses website. Fokus utama berada pada upaya menelusuri sumber masalah melalui pengamatan pola lalu lintas jaringan selama insiden berlangsung.
+Studi kasus ini disusun untuk memahami dan menganalisis gangguan jaringan yang berdampak langsung pada akses website. Fokus utama berada pada proses menelusuri sumber masalah lewat pengamatan pola lalu lintas jaringan saat insiden terjadi.
 
 Tujuan analisis meliputi:
 - Mengidentifikasi jenis serangan jaringan berdasarkan pola trafik TCP dan HTTP yang terpantau
-- Menganalisis karakteristik lalu lintas jaringan yang tidak normal serta dampaknya terhadap kinerja server web
-- Menjelaskan bagaimana serangan tersebut memicu gangguan akses website hingga terjadi koneksi timeout
+- Menganalisis ciri lalu lintas jaringan yang tidak normal dan dampaknya terhadap kinerja server web
+- Menjelaskan cara serangan tersebut memicu gangguan akses website hingga muncul koneksi timeout
 - Memahami dampak serangan jaringan terhadap operasional organisasi dan aktivitas karyawan
-- Menyusun dasar analisis untuk menentukan langkah penanganan dan pencegahan insiden di masa mendatang
+- Menyusun dasar analisis untuk menentukan langkah penanganan dan pencegahan insiden ke depan
 
 ---
 
@@ -47,27 +47,27 @@ Tujuan analisis meliputi:
 
 ### a. Attack identification
 
-Hasil pengamatan lalu lintas jaringan menunjukkan bahwa gangguan akses website yang ditandai dengan pesan connection timeout mengarah pada serangan Denial of Service (DoS). Trafik memperlihatkan lonjakan permintaan TCP SYN dalam jumlah besar yang datang dari alamat IP tidak dikenal dalam waktu singkat.
+Hasil pengamatan lalu lintas jaringan menunjukkan gangguan akses website dengan pesan connection timeout mengarah ke serangan Denial of Service (DoS). Trafik terlihat melonjak dengan banyak permintaan TCP SYN yang masuk dalam waktu singkat. Permintaan tersebut berasal dari alamat IP tidak dikenal.
 
-Permintaan koneksi tersebut tidak pernah diselesaikan melalui proses TCP secara normal. Server web terus menerima paket SYN tanpa adanya penyelesaian koneksi hingga tahap akhir, sehingga resource server terkuras. Pola ini sesuai dengan karakteristik serangan SYN Flood, di mana server dibanjiri permintaan koneksi palsu untuk mengganggu ketersediaan layanan.
+Permintaan koneksi tidak pernah diselesaikan secara normal. Server terus menerima paket SYN tanpa kelanjutan proses TCP sampai selesai. Resource server terkuras karena koneksi dibiarkan setengah terbuka. Pola ini sesuai dengan karakteristik serangan SYN flood, di mana server dibanjiri permintaan koneksi palsu sampai layanan tidak tersedia.
 
 ### b. Impact on server
 
-Akses ke server web pada kondisi normal selalu diawali dengan proses TCP three-way handshake. Client mengirim paket SYN sebagai permintaan koneksi. Server membalas dengan SYN-ACK sebagai tanda persetujuan dan menyiapkan resource. Client kemudian mengirim ACK untuk menyelesaikan koneksi.
-- Serangan SYN flood terjadi saat penyerang mengirim paket SYN dalam jumlah besar tanpa melanjutkan proses handshake hingga selesai.
-- Server tetap merespons setiap permintaan tersebut dengan menyediakan resource, meskipun koneksi tidak pernah terbentuk sepenuhnya.
-- Kapasitas server pun cepat habis dan tidak mampu melayani koneksi baru.
+Akses normal ke server web dimulai dengan proses TCP three-way handshake. Client mengirim SYN sebagai permintaan koneksi. Server membalas dengan SYN-ACK sambil menyiapkan resource. Client kemudian mengirim ACK untuk menyelesaikan koneksi.
+- Serangan SYN flood terjadi saat penyerang mengirim paket SYN dalam jumlah besar tanpa melanjutkan handshake.
+- Server tetap merespons setiap permintaan dan mengalokasikan resource meskipun koneksi tidak pernah terbentuk penuh.
+- Kapasitas server cepat habis dan tidak mampu menerima koneksi baru.
 
-Log jaringan menunjukkan server web akhirnya gagal merespons permintaan dari pengguna yang sah. Koneksi tidak pernah terbentuk dengan baik dan pengguna menerima pesan connection timeout saat mengakses website. Kondisi ini berdampak langsung pada ketersediaan layanan dan menghambat aktivitas operasional yang bergantung pada website.
+Log jaringan menunjukkan server web akhirnya gagal merespons permintaan pengguna yang sah. Koneksi tidak pernah terbentuk dengan baik dan pengguna menerima pesan connection timeout saat mengakses website. Kondisi ini langsung berdampak pada ketersediaan layanan dan mengganggu aktivitas operasional yang bergantung pada website.
 
 ---
 
 ## 💡 Insights and lessons learned <a name="insight">
 
-Studi kasus ini menggambarkan bagaimana serangan SYN flood dapat langsung memengaruhi ketersediaan layanan web tanpa harus menyerang celah aplikasi. Pola trafik yang dipenuhi paket SYN tanpa penyelesaian three way handshake menjadi sinyal jelas adanya upaya Denial of Service (DoS).
+Studi kasus ini menunjukkan serangan SYN flood bisa langsung mengganggu ketersediaan layanan web tanpa menyentuh sisi aplikasi. Pola trafik berisi paket SYN yang tidak pernah menyelesaikan three way handshake menjadi tanda kuat adanya serangan Denial of Service (DoS).
 
-Analisis lalu lintas jaringan menunjukkan bahwa serangan memanfaatkan keterbatasan server dalam menangani koneksi setengah terbuka atau half open connections. Penumpukan koneksi tersebut membuat server kehabisan sumber daya dan gagal merespons permintaan dari pengguna yang sah. Layanan pun terasa lambat atau bahkan tidak bisa diakses sama sekali.
+Analisis lalu lintas jaringan memperlihatkan serangan memanfaatkan keterbatasan server dalam menangani koneksi setengah terbuka atau half open connection. Penumpukan koneksi ini membuat resource server cepat habis dan tidak mampu merespons permintaan pengguna yang sah. Layanan terasa lambat bahkan tidak bisa diakses sama sekali.
 
-Kasus ini memperlihatkan peran penting network monitoring dan log analysis sebagai langkah awal mendeteksi serangan berbasis trafik. Pemahaman terhadap pola TCP yang normal dan menyimpang membantu insiden dikenali lebih cepat sebelum dampaknya meluas ke sistem lain.
+Kasus ini menunjukkan pentingnya network monitoring dan analisis log sebagai langkah awal mendeteksi serangan berbasis trafik. Pemahaman pola TCP yang normal dan menyimpang membantu insiden dikenali lebih cepat sebelum dampaknya melebar ke sistem lain.
 
-Gambaran keseluruhan dari analisis ini menegaskan bahwa serangan terhadap aspek availability tidak selalu rumit. Dampaknya bisa sangat besar jika tidak diantisipasi dengan mitigasi yang tepat, seperti konfigurasi firewall yang baik, penerapan rate limiting, dan penggunaan sistem deteksi intrusi.
+Hasil analisis menegaskan serangan terhadap availability tidak selalu rumit. Dampaknya bisa besar jika tidak diantisipasi. Mitigasi seperti konfigurasi firewall yang tepat, penerapan rate limiting, dan penggunaan intrusion detection system menjadi hal yang perlu diperhatikan.
